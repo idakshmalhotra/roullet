@@ -3,6 +3,15 @@
 ## Overview
 The **P2P Betting App** is a decentralized, peer-to-peer betting platform that allows users to create, join, and participate in betting rooms without intermediaries. Built on a P2P network, it provides a seamless experience for setting up bets, placing wagers, and resolving results in a trustless environment.
 
+---
+
+## INSTALLATION
+after installing pear runtime 
+run this command:
+# pear run pear://tfm3rxkgo3eg8xzrsez34idd8sm41rhbjinig3smdpbseqpscgiy
+
+---
+
 ## Features
 - **Create Betting Rooms**: Start a new betting session with a unique room ID.
 - **Join Existing Rooms**: Enter a room ID to participate in ongoing bets.
@@ -14,12 +23,7 @@ The **P2P Betting App** is a decentralized, peer-to-peer betting platform that a
 
 ---
 
-## INSTALLATION
-after installing pear runtime 
-run this command:
-# pear run pear://tfm3rxkgo3eg8xzrsez34idd8sm41rhbjinig3smdpbseqpscgiy
 
----
 
 ## Getting Started
 ### Launching the App
