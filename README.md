@@ -17,7 +17,7 @@ The **P2P Betting App** is a decentralized, peer-to-peer betting platform that a
 ## INSTALLATION
 after installing pear runtime 
 run this command:
-### pear run pear://tfm3rxkgo3eg8xzrsez34idd8sm41rhbjinig3smdpbseqpscgiy
+# pear run pear://tfm3rxkgo3eg8xzrsez34idd8sm41rhbjinig3smdpbseqpscgiy
 
 ---
 
