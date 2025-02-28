@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      pear-ctrl[data-platform="darwin"] { margin-top: 12px; margin-left: 10px; }
+
+      #titlebar {
+        -webkit-app-region: drag;
+        height: 30px;
+        width: 100%;
+        position: fixed;
+        left: 0;
+        top: 0;
+        background-color: #4444B013;
+        filter: drop-shadow(2px 10px 6px #888);
+      }
+
+      button, input {
+        all: unset;
+        border: 1px ridge #4444B0;
+        background: #000;
+        color: #4444B0;
+        padding: .45rem;
+        font-family: monospace;
+        font-size: 1rem;
+        line-height: 1rem;
+      }
+
+      body {
+        background-color: #010116;
+        font-family: monospace;
+        margin: 0;
+        padding: 0;
+      }
+
+      main {
+        display: flex;
+        height: 100vh;
+        color: white;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      #or {
+        margin: 1.5rem auto;
+      }
+
+      #setup {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #loading {
+        align-self: center;
+      }
+
+      #betting {
+        display: flex;
+        flex-direction: column;
+        width: 100vw;
+        padding: .75rem;
+      }
+
+      #header {
+        margin-top: 2.2rem;
+        margin-bottom: 0.75rem;
+      }
+
+      #details {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      #events {
+        height: 150px;
+        font-family: 'Courier New', Courier, monospace;
+        overflow-y: scroll;
+        margin-bottom: 10px;
+        border: 1px solid #4444B0;
+        padding: 5px;
+      }
+
+      #action-panels {
+        display: flex;
+        gap: 10px;
+      }
+
+      .panel {
+        flex: 1;
+        border: 1px solid #4444B0;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+
+      .panel h3 {
+        margin-top: 0;
+        color: #4444B0;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      input[type="submit"] {
+        margin-top: 5px;
+        background-color: #4444B0;
+        color: white;
+        cursor: pointer;
+      }
+
+      #active-bets {
+        overflow-y: auto;
+        max-height: 200px;
+        border: 1px solid #4444B0;
+        padding: 5px;
+        margin-top: 10px;
+      }
+
+      .bet-item {
+        margin-bottom: 10px;
+        padding: 5px;
+        border-bottom: 1px dashed #4444B0;
+      }
+
+      .bet-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3px;
+      }
+
+      .bet-creator {
+        font-style: italic;
+        font-size: 0.8em;
+      }
+
+      .bet-status {
+        font-weight: bold;
+      }
+
+      .open-bet {
+        color: #44B044;
+      }
+
+      .resolved-bet {
+        color: #B04444;
+      }
+
+      #chat-container {
+        display: flex;
+        margin-top: 10px;
+      }
+
+      #chat-form {
+        display: flex;
+        width: 100%;
+      }
+
+      #chat-message {
+        flex: 1;
+      }
+    </style>
+    <script type='module' src='./app.js'></script>
+  </head>
+  <body>
+    <div id="titlebar">
+      <pear-ctrl></pear-ctrl>
+    </div>
+    <main>
+      <div id="setup">
+        <div>
+          <button id="create-bet-room">Create Betting Room</button>
+        </div>
+        <div id="or">
+          - or -
+        </div>
+        <form id="join-form">
+          <button type="submit" id="join-bet-room">Join</button>
+          <input required id="join-bet-room-topic" type="text" placeholder="Betting Room ID" />
+        </form>
+      </div>
+      
+      <div id="loading" class="hidden">Loading ...</div>
+      
+      <div id="betting" class="hidden">
+        <div id="header">
+          <div id="details">
+            <div>
+              Room ID: <span id="bet-room-topic"></span>
+            </div>
+            <div>
+              Username: <span id="my-username">User</span> | 
+              Balance: <span id="balance">1000</span> | 
+              Peers: <span id="peers-count">0</span>
+            </div>
+          </div>
+        </div>
+        
+        <div id="events"></div>
+        
+        <div id="action-panels">
+          <div class="panel">
+            <h3>Your Info</h3>
+            <form id="username-form">
+              <input id="username-input" type="text" placeholder="Enter username" />
+              <input type="submit" value="Set Username" />
+            </form>
+          </div>
+          
+          <div class="panel">
+            <h3>Create Bet</h3>
+            <form id="create-bet-form">
+              <input id="bet-description" type="text" placeholder="Bet description" required />
+              <input id="bet-options" type="text" placeholder="Options (comma separated)" required />
+              <input type="submit" value="Create Bet" />
+            </form>
+          </div>
+          
+          <div class="panel">
+            <h3>Place Bet</h3>
+            <form id="place-bet-form">
+              <input id="bet-id" type="text" placeholder="Bet ID" required />
+              <input id="bet-option" type="text" placeholder="Option" required />
+              <input id="bet-amount" type="number" placeholder="Amount" required min="1" />
+              <input type="submit" value="Place Bet" />
+            </form>
+          </div>
+          
+          <div class="panel">
+            <h3>Resolve Bet</h3>
+            <form id="resolve-bet-form">
+              <input id="resolve-bet-id" type="text" placeholder="Bet ID" required />
+              <input id="resolve-winner" type="text" placeholder="Winning Option" required />
+              <input type="submit" value="Resolve Bet" />
+            </form>
+          </div>
+        </div>
+        
+        <h3>Active Bets</h3>
+        <div id="active-bets"></div>
+        
+        <div id="chat-container">
+          <form id="chat-form">
+            <input id="chat-message" type="text" placeholder="Type a message..." />
+            <input type="submit" value="Send" />
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
